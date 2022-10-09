@@ -7,6 +7,7 @@ var con = mysql.createConnection({
   password: "Database--1",
   database: "sakila"
 });
+var mysqlResult; 
 
 con.connect(function (err) {
   if(err) throw err;
@@ -15,11 +16,14 @@ con.connect(function (err) {
 
 con.query("SELECT * FROM actor", function (err, result) {
   if(err) throw err;
-  console.log(result);
+  mysqlResult = result;
 });
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/db/all', function(req, res, next) {
+  res.send(mysqlResult)
+});
 module.exports = router;
