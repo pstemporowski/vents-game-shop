@@ -5,25 +5,32 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Database--1",
-  database: "sakila"
+  database: "vents_gameshop"
 });
-var mysqlResult; 
 
 con.connect(function (err) {
   if(err) throw err;
   console.log("Connected");
 });
 
-con.query("SELECT * FROM actor", function (err, result) {
-  if(err) throw err;
-  mysqlResult = result;
-});
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  var mysqlResult 
+  con.query("SELECT * FROM user", function (err, result) {
+    if(err) throw err;
+    mysqlResult = result;
+  });
+  res.render('index', { title: 'Express', users: mysqlResult});
 });
 
+
 router.get('/db/all', function(req, res, next) {
+  con.query("SELECT * FROM actor", function (err, result) {
+    if(err) throw err;
+    mysqlResult = result;
+  });
   res.send(mysqlResult)
 });
 module.exports = router;

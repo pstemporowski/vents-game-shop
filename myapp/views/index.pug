@@ -3,3 +3,10 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  each val in users 
+    p <b> #{val.username}</b>
+    p #{val.email}
+    br
+    button(onclick="window.location.replace('/" + val.user_id + " ')") Mehr details 
+
