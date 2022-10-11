@@ -19,12 +19,37 @@ con.connect(function (err) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  con.query("SELECT * FROM user_info", function (err, result) {
+  con.query("SELECT * FROM user_info LIMIT 5", function (err, userList) {
     if(err) throw err;
 
-    res.render('index', { title: 'Express', users: result});
+    con.query("SELECT * FROM game_info LIMIT 5", function (err, gameList) {
+      if(err) throw err;
+      res.render('index', { title: 'Express', users: userList, games: gameList});
+    });
   });
   
+});
+
+router.get('/users', function(req, res, next) {
+  con.query('SELECT * FROM user_info', function (err, result) {
+    if(err) {
+      res.status(404).send('Problem mit der Datenbank ist aufgetreten');
+      throw err;
+    }
+
+    res.render('listUsers', {users: result});
+  });
+});
+
+router.get('/games', function(req, res, next) {
+  con.query('SELECT * FROM game_info', function (err, result) {
+    if(err) {
+      res.status(404).send('Problem mit der Datenbank ist aufgetreten');
+      throw err;
+    }
+
+    res.render('listGames', {games: result});
+  });
 });
 
 router.get('/users/:userId', function(req, res, next) {
@@ -151,4 +176,5 @@ router.get('/db/all', function(req, res, next) {
   
   res.send(mysqlResult)
 });
+
 module.exports = router;

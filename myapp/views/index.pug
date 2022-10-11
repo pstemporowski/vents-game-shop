@@ -1,10 +1,29 @@
 extends layout
 
 block content
-
-  each val in users 
-    p <b> #{val.username}</b>
-    p #{val.email}
-    br
-    button(onclick="window.location.replace('/')") Mehr details 
+  div#left
+    h3 Users
+    table
+      tr
+        th title
+        th creationDate
+        th content
+        each val in users
+          tr 
+            td <b> #{val.username}</b>
+            td #{val.email}
+            td #{val.name}
+    button(onclick="window.location.replace('/users')") USer Verwalten
+  div#right
+    h3 Games
+    table
+      tr
+        th title
+        th 
+        each val in games
+          tr 
+            td #{val.title}
+            td #{val.studio}
+            td #{val.price}
+    button(onclick="window.location.replace('/games')") Games Verwalten
 

@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h3 Users
+    each val in users 
+        div(class= 'user')
+            p <b> #{val.username}</b>
+            br
+            button(onclick="window.location.replace('/')") Mehr details 

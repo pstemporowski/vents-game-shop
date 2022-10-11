@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h3 Games
+    each val in games 
+        div(class = 'game')
+            p <b> #{val.title}</b>
+            p #{val.price}
+            br
+            button(onclick="window.location.replace('/')") Mehr details 
