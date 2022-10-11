@@ -11,12 +11,15 @@ block content
       th title
       th creationDate
       th content
+      th
     each val in comments
       tr 
         td #{val.username}
         td #{val.title}
         td #{val.publish_date}
         td #{val.text}
+        td
+          button(onclick='deleteComment(' + val.comment_id+ ')')
   script.
     function deleteGame(id) {
         fetch('/deleteGame/' + id, {
@@ -29,6 +32,21 @@ block content
         }).then(function (response) {
             response.text().then(function (text) {
             window.location = '/games';
+            });
+        })
+    }
+
+    function deleteComment(id) {
+        fetch('/deleteComment/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+      
+        }).then(function (response) {
+            response.text().then(function (text) {
+            window.location = '/games/' + id;
             });
         })
     }

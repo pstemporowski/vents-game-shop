@@ -45,7 +45,7 @@ block content
 
           response.text().then(function (text) {
             if (!response.ok) {
-                setErrorLabel("Konnte die EAN in der Datenbank nicht finden");
+                setErrorLabel(err);
             }else {
                 window.location = '/'
             }

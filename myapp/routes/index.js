@@ -60,13 +60,14 @@ router.get('/users/:userId', function(req, res, next) {
   let userId = req.params.userId;
   let commentsList = {};
   let singleUser;
-  con.query('SELECT * FROM users WHERE user_id = ' + userId, function (err, result) {
+  con.query('CALL user_details(' + userId + ')', function (err, result) {
     if(err) throw err;
 
-    singleUser = result[0];
+    singleUser = result[0][0];
 
     if(!singleUser){
       res.status(404).send("User nicht gefunden");
+      return;
     }
 
     con.query('SELECT * FROM user_comments WHERE user_ID = ' + userId, function(err, resComments) {
@@ -75,8 +76,16 @@ router.get('/users/:userId', function(req, res, next) {
         res.status(404).send('Problem mit der Datenbank ist aufgetreten');
         throw err;
       }
-      commentsList = resComments;
-      res.render('singleUser', { title: 'Express', user: result[0], comments: commentsList});
+      con.query('SELECT * FROM games_owned WHERE user_ID =' + userId, function(err, gamesList) {
+
+        if(err) {
+          res.status(404).send('Problem mit der Datenbank ist aufgetreten');
+          throw err;
+        }
+      
+        commentsList = resComments;
+        res.render('singleUser', { title: 'Express', user: singleUser, comments: commentsList, games: gamesList});
+      });
     }); 
       
     
@@ -93,11 +102,13 @@ router.get('/games/:gameId', function(req, res, next) {
       res.status(404).send('Problem mit der Datenbank ist aufgetreten');
       throw err;
     }
-    console.log(result[0][0]);
+    
     singleGame = result[0][0];
 
-    if(!singleGame)
-      res.status(404).send('Game not found');
+    if(!singleGame) {
+      res.status(404).send("GAME nicht gefunden");
+      return;
+    }
 
       con.query('SELECT * FROM game_comments WHERE game_id = ' + gameId, function (err, commentsList) {
 
@@ -112,14 +123,14 @@ router.get('/games/:gameId', function(req, res, next) {
 });
 
 router.post('/addGame', function(req, res, next) {
-  console.log(req.body.FSK);
+  console.log(req.body.fsk);
   con.query('INSERT INTO games (title, price, picture, studio_id, FSK, description)' +
    ' VALUES ("' + req.body.title + '",' + req.body.price + ',"'
     +req.body.picture+ '",' + req.body.studio_id +
     ',' + req.body.fsk + ',"' + req.body.description + '")', function(err, result) {
       if(err) {
-        res.status(404).send('Problem mit der Datenbank ist aufgetreten');
-        throw err;
+        res.status(404).send(err);
+        return;
       }
 
       res.send("Added");
@@ -128,17 +139,18 @@ router.post('/addGame', function(req, res, next) {
 
 router.get('/editGame/:gameID', function(req, res, next) {
   var gameId = req.params.gameID;
-
+  var singleGame;
   con.query('select * from games where game_id=' + gameId + ';' , function (err, result) {
     
     if(err) {
       res.status(404).send('Problem mit der Datenbank ist aufgetreten');
       throw err;
     }
-    singleGame = result[0][0];
+
+    singleGame = result[0];
 
     if(!singleGame)
-      res.status(404).send('Game not found');
+      res.status(404).send('Game wurde nicht gefunden');
 
     res.render('editGame', {title:'Test', game: singleGame});
     
@@ -146,6 +158,7 @@ router.get('/editGame/:gameID', function(req, res, next) {
 });
 
 router.put('/editGame/:gameID', function(req, res, next) {
+  console.log('#im in');
   var game = req.params.gameID;
   con.query('UPDATE games ' + 
   'SET title ="' +req.body.title + '",'+
@@ -157,11 +170,11 @@ router.put('/editGame/:gameID', function(req, res, next) {
   'WHERE game_id=' + game
   , function(err, result) {
       if(err) {
-        res.status(404).send('Problem mit der Datenbank ist aufgetreten');
-        throw err;
+        res.status(404).send(err);
+        return;
       }
 
-      res.send("Edited");
+      res.send(game);
     });  
 });
 
@@ -194,7 +207,7 @@ router.delete('/deleteUser/:userID', function(req, res, next) {
 router.delete('/deleteComment/:commentID', function(req, res, next) {
   var comment = req.params.commentID;
 
-  con.query( 'DELETE FROM comments WHERE user_id =' + comment, function(err, result) {
+  con.query( 'DELETE FROM comments WHERE comment_id =' + comment, function(err, result) {
     if(err) {
       res.status(404).send('Problem mit der Datenbank ist aufgetreten');
       throw err;

@@ -22,9 +22,15 @@ block content
         label(for='studio_id') studio_id:
         input#studio_id(value=game.studio_id type='number' name='studio_id')
         br
-        button#addGame Game hinzufügen
+        input#game_id(value=game.game_id type='hidden' name='game_id' )
+        button#editGame Game hinzufügen
     script.
-        document.getElementById('addGame')?.addEventListener('click', function (form) {
+            
+        function setErrorLabel(ErrorCode) {
+          document.getElementById("errorLabel").innerHTML = ErrorCode;
+        }
+
+        document.getElementById('editGame')?.addEventListener('click', function (form) {
         form.preventDefault();
         let data = {
             title: document.getElementById('title').value,
@@ -34,7 +40,9 @@ block content
             description: document.getElementById('description').value,
             studio_id: document.getElementById('studio_id').value
         };
-        fetch('/addGame', {
+        var game_id = document.getElementById('game_id').value;
+
+        fetch('/editGame/' + game_id, {
             method: 'PUT',
             headers: {
              'Accept': 'application/json',
@@ -45,7 +53,7 @@ block content
 
           response.text().then(function (text) {
             if (!response.ok) {
-                setErrorLabel("Konnte die EAN in der Datenbank nicht finden");
+                setErrorLabel(text);
             }else {
                 window.location = '/'
             }

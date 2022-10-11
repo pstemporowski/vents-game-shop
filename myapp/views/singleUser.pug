@@ -14,6 +14,13 @@ block content
         td #{val.title}
         td #{val.publish_date}
         td #{val.text}
+  p GamesOwned:
+  table
+    tr
+      th title
+    each val in games
+      tr 
+        td #{val.title}
   script.
     function deleteUser(id) {
         fetch('/deleteUser/' + id, {
