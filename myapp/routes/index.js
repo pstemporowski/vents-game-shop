@@ -52,6 +52,10 @@ router.get('/games', function(req, res, next) {
   });
 });
 
+router.get('/addGame', function(req, res, next) {
+  res.render('createGame', title = 'addGame');
+});
+
 router.get('/users/:userId', function(req, res, next) {
   let userId = req.params.userId;
   let commentsList = {};
@@ -83,18 +87,27 @@ router.get('/users/:userId', function(req, res, next) {
 router.get('/games/:gameId', function(req, res, next) {
   let gameId = req.params.gameId;
   let singleGame = {};
-  con.query('SELECT * FROM games_info WHERE game_id = ' + gameId, function (err, result) {
+  con.query('CALL game_details(' + gameId + ');' , function (err, result) {
+    
     if(err) {
       res.status(404).send('Problem mit der Datenbank ist aufgetreten');
       throw err;
     }
-    
-    singleGame = result[0];
-
+    console.log(result[0][0]);
+    singleGame = result[0][0];
+    console.log(singleGame.title);
     if(!singleGame)
-      res.status(404).send('Game not found'); 
+      res.status(404).send('Game not found');
 
-    res.render('singleGame', { title: 'Express', game: singleGame});
+      con.query('SELECT * FROM game_comments WHERE game_id = ' + gameId, function (err, commentsList) {
+
+        if(err) {
+          res.status(404).send('Problem mit der Datenbank ist aufgetreten');
+          throw err;
+        }
+
+        res.render('singleGame', { title: 'Express', game: singleGame, comments: commentsList});
+      });   
   });
 });
 

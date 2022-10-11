@@ -2,16 +2,31 @@ extends layout
 block content
   p Name: <b>#{user.username}</b>
   p EmailAdress: <b>#{user.email}</b>
-
+  button(onclick='deleteUser('+ user.user_id+ ')') deleteUser
   p comments:
   table
     tr
       th title
       th creationDate
       th content
-      each val in comments
+    each val in comments
       tr 
         td #{val.title}
         td #{val.publish_date}
         td #{val.text}
+  script.
+    function deleteUser(id) {
+        fetch('/deleteUser/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+      
+        }).then(function (response) {
+            response.text().then(function (text) {
+            window.location = '/users';
+            });
+        })
+    }
       

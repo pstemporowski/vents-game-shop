@@ -1,9 +1,11 @@
 extends layout
 
 block content
+    button(onclick="window.location.href = '/'") Startseite 
     h3 Users
     each val in users 
         div(class= 'user')
             p <b> #{val.username}</b>
             br
-            button(onclick="window.location.replace('/')") Mehr details 
+            button
+                a(href= '/users/' + val.user_id ) Details

@@ -2,3 +2,32 @@ extends layout
 block content
   p Title: <b>#{game.title}</b>
   p Price: <b>#{game.price}</b>
+  button(onclick='deleteGame('+ game.game_id + ')') Game löschen
+  p comments:
+  table
+    tr
+      th creator
+      th title
+      th creationDate
+      th content
+    each val in comments
+      tr 
+        td #{val.username}
+        td #{val.title}
+        td #{val.publish_date}
+        td #{val.text}
+  script.
+    function deleteGame(id) {
+        fetch('/deleteGame/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+      
+        }).then(function (response) {
+            response.text().then(function (text) {
+            window.location = '/games';
+            });
+        })
+    }

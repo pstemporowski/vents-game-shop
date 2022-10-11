@@ -1,0 +1,39 @@
+extends layout
+
+block content
+    form#addProductForm
+        label#errorLabel
+        br
+        label(for='EAN') EAN:
+        input#EAN(type='number' name='EAN')
+        br
+        label(for='amount') Produktmenge:
+        input#amount(type='number' name='amount')
+        br
+        label(for='bestBeforeDate') Mindesthaltbarkeitsdatum:
+        input#bestBeforeDate(type='Date' name='bestBeforeDate')
+        br
+        button#addProduct Product hinzufügen
+    script.
+        document.getElementById('addGame')?.addEventListener('click', function (form) {
+        form.preventDefault();
+        
+        fetch('/addGame', {
+            method: 'POST',
+            headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+          }).then(function (response) {
+          response.text().then(function (text) {
+          if (!response.ok) {
+            setErrorLabel("Konnte die EAN in der Datenbank nicht finden");
+          }else {
+            window.location = '/'
+          }
+          });
+        })
+        }
+          
+      }); 

@@ -6,24 +6,33 @@ block content
     table
       tr
         th title
-        th creationDate
-        th content
+        th email
+        th name
         each val in users
           tr 
             td <b> #{val.username}</b>
             td #{val.email}
             td #{val.name}
-    button(onclick="window.location.replace('/users')") USer Verwalten
+        tr
+          td ...
+          td ...
+          td ...
+    button(onclick="window.location.href = '/users'") User Verwalten
   div#right
     h3 Games
     table
       tr
         th title
-        th 
+        th studio
+        th price
         each val in games
           tr 
             td #{val.title}
             td #{val.studio}
             td #{val.price}
-    button(onclick="window.location.replace('/games')") Games Verwalten
+        tr
+          td ...
+          td ...
+          td ...
+    button(onclick="window.location.href = '/games' ") Games Verwalten
 
