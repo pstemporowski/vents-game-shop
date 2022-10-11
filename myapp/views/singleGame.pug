@@ -19,7 +19,7 @@ block content
         td #{val.publish_date}
         td #{val.text}
         td
-          button(onclick='deleteComment(' + val.comment_id+ ')')
+          button(onclick='deleteComment(' + val.comment_id+ ')') löschen
   script.
     function deleteGame(id) {
         fetch('/deleteGame/' + id, {
