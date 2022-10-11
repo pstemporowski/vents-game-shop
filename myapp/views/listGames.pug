@@ -1,7 +1,8 @@
 extends layout
 
 block content
-    button(onclick="window.location.href = '/'") Startseite 
+    button(onclick="window.location.href = '/'") Startseite
+    button(onclick="window.location.href = '/addGame'") Add Game
     h3 Games
     each val in games 
         div(class = 'game')

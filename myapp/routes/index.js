@@ -53,7 +53,7 @@ router.get('/games', function(req, res, next) {
 });
 
 router.get('/addGame', function(req, res, next) {
-  res.render('createGame', title = 'addGame');
+  res.render('createGame', {title: 'addGame'});
 });
 
 router.get('/users/:userId', function(req, res, next) {
@@ -95,7 +95,7 @@ router.get('/games/:gameId', function(req, res, next) {
     }
     console.log(result[0][0]);
     singleGame = result[0][0];
-    console.log(singleGame.title);
+
     if(!singleGame)
       res.status(404).send('Game not found');
 
@@ -112,10 +112,11 @@ router.get('/games/:gameId', function(req, res, next) {
 });
 
 router.post('/addGame', function(req, res, next) {
+  console.log(req.body.FSK);
   con.query('INSERT INTO games (title, price, picture, studio_id, FSK, description)' +
    ' VALUES ("' + req.body.title + '",' + req.body.price + ',"'
     +req.body.picture+ '",' + req.body.studio_id +
-    ',' + req.body.FSK + ',"' + req.body.description + '")', function(err, result) {
+    ',' + req.body.fsk + ',"' + req.body.description + '")', function(err, result) {
       if(err) {
         res.status(404).send('Problem mit der Datenbank ist aufgetreten');
         throw err;
@@ -125,6 +126,24 @@ router.post('/addGame', function(req, res, next) {
     });  
 });
 
+router.get('/editGame/:gameID', function(req, res, next) {
+  var gameId = req.params.gameID;
+
+  con.query('select * from games where game_id=' + gameId + ';' , function (err, result) {
+    
+    if(err) {
+      res.status(404).send('Problem mit der Datenbank ist aufgetreten');
+      throw err;
+    }
+    singleGame = result[0][0];
+
+    if(!singleGame)
+      res.status(404).send('Game not found');
+
+    res.render('editGame', {title:'Test', game: singleGame});
+    
+  });
+});
 
 router.put('/editGame/:gameID', function(req, res, next) {
   var game = req.params.gameID;
@@ -132,8 +151,9 @@ router.put('/editGame/:gameID', function(req, res, next) {
   'SET title ="' +req.body.title + '",'+
   'price =' + req.body.price + ',' +
   'picture ="' + req.body.picture + '",' +
-  'fsk =' + req.body.FSK + ',' +
-  'description ="' +req.body.description + '"' +
+  'fsk =' + req.body.fsk + ',' +
+  'description ="' +req.body.description + '",' +
+  'studio_id =' + req.body.studio_id + " " +
   'WHERE game_id=' + game
   , function(err, result) {
       if(err) {

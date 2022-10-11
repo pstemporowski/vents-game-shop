@@ -1,5 +1,6 @@
 extends layout
 block content
+  button(onclick='window.location="/editGame/' + game.game_id+ '"') Editieren
   p Title: <b>#{game.title}</b>
   p Price: <b>#{game.price}</b>
   button(onclick='deleteGame('+ game.game_id + ')') Game löschen

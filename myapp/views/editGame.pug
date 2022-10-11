@@ -5,22 +5,22 @@ block content
         label#errorLabel
         br
         label(for='title') title:
-        input#title(type='text' name='title')
+        input#title(value=game.title type='text' name='title')
         br
         label(for='price') price:
-        input#price(type='number' name='price')
+        input#price(value=game.price type='number' name='price')
         br
         label(for='picture') picture:
-        input#picture(type='text' name='picture')
+        input#picture(value=game.picture type='text' name='picture')
         br
         label(for='fsk') fsk:
-        input#fsk(type='number' name='fsk')
+        input#fsk(value=game.fsk type='number' name='fsk')
         br
         label(for='description') description:
-        input#description(type='text' name='description')
+        input#description(value=game.description type='text' name='description')
         br
         label(for='studio_id') studio_id:
-        input#studio_id(type='number' name='studio_id')
+        input#studio_id(value=game.studio_id type='number' name='studio_id')
         br
         button#addGame Game hinzufügen
     script.
@@ -35,7 +35,7 @@ block content
             studio_id: document.getElementById('studio_id').value
         };
         fetch('/addGame', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
              'Accept': 'application/json',
              'Content-Type': 'application/json'
