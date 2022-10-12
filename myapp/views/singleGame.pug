@@ -1,38 +1,34 @@
 extends layout
 block content
-  button(onclick='window.location="/editGame/' + game.game_id+ '"') Editieren
-  p Title: <b>#{game.title}</b>
-  p Price: <b>#{game.price}</b>
-  p Likes #{info.like_count}
-  p Likes #{info.dislike_count}
-  button(onclick='deleteGame('+ game.game_id + ')') Game löschen
-  p comments:
-  table
-    tr
-      th creator
-      th title
-      th creationDate
-      th content
-      th
-    each val in comments
-      tr(style='background-color:' + val.color + ';') 
-        td #{val.username}
-        td #{val.title}
-        td #{val.publish_date}
-        td #{val.text}
-        td
-          button(onclick='deleteComment(' + val.comment_id+ ')') löschen
-        td(style='display:none') #{val.likes}
-  script.
-    var rows = document.getElementsByClassName('row');
-    var cell
-    for( var i = 0; i < rows.length; i++) {
-      if(rows[i][5].innerHTML == 'T')
-        rows[i].style.backgroundColor = "red";
-      else
-        rows[i].style.backgroundColor = "green";
-    }
+  div.startButton
+      button#startButton(onclick="window.location.href = '/'") Mainpage
+      button#startButton(onclick="window.location.href = '/games/'") Gamelist
+  div.gameTitle
+      h1 <b>#{game.title}</b>
+      p by #{game.studio} 
+  div.gameInfo
+      p Origin country <b>#{game.origin} </b>, FSK: <b>#{game.fsk}</b>, Price: <b>#{game.price}€</b>
+      p Description: <b>#{game.description}</b> 
 
+      button(onclick='window.location="/editGame/' + game.game_id+ '"') Edit
+      button(onclick='deleteGame('+ game.game_id + ')') Delete
+
+  table.comments
+    tr
+      th(class='column_names') User
+      th(class='column_names') Title
+      th(class='column_names') Date
+      th(class='column_names') Comment
+      th(class='column_names')
+    each val in comments
+      tr(style='background-color:' + val.color + ';')  
+        td(class='column_text') #{val.username}
+        td(class='column_text') #{val.title}
+        td(class='column_text') #{val.publish_date}
+        td(class='column_text') #{val.text}
+        td(class='column_text')
+          button(onclick='deleteComment(' + val.comment_id+ ')') delete
+  script.
     function deleteGame(id) {
         fetch('/deleteGame/' + id, {
             method: 'DELETE',

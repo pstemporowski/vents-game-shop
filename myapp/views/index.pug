@@ -1,13 +1,17 @@
 extends layout
 
 block content
+  div(class='title')
+    h1 Vents GameShop 
+    h2 - Your Videogame Platform -
+
   div#left
     h3 Users
-    table
+    table(class='table')
       tr
-        th title
-        th email
-        th name
+        th(class='column_names')  Title
+        th(class='column_names')  E-Mail
+        th(class='column_names')  Name
         each val in users
           tr 
             td <b> #{val.username}</b>
@@ -17,14 +21,15 @@ block content
           td ...
           td ...
           td ...
-    button(onclick="window.location.href = '/users'") User Verwalten
+    br
+    button(onclick="window.location.href = '/users'") Manage Users
   div#right
     h3 Games
-    table
+    table(class='table')
       tr
-        th title
-        th studio
-        th price
+        th(class='column_names')  Title
+        th(class='column_names')  Studio
+        th(class='column_names')  Price
         each val in games
           tr 
             td #{val.title}
@@ -34,5 +39,6 @@ block content
           td ...
           td ...
           td ...
-    button(onclick="window.location.href = '/games' ") Games Verwalten
+    br
+    button(onclick="window.location.href = '/games' ") Manage Games
 
