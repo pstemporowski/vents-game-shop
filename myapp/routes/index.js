@@ -47,8 +47,8 @@ router.get('/games', function(req, res, next) {
       res.status(404).send('Problem mit der Datenbank ist aufgetreten');
       throw err;
     }
-
-    res.render('listGames', {games: result});
+   
+      res.render('listGames', {games: result});
   });
 });
 
@@ -116,8 +116,14 @@ router.get('/games/:gameId', function(req, res, next) {
           res.status(404).send('Problem mit der Datenbank ist aufgetreten');
           throw err;
         }
-        console.log(commentsList.comment_id);
-        res.render('singleGame', { title: 'Express', game: singleGame, comments: commentsList});
+        con.query('CALL like_info(' + gameId + ')', function (err, like_info) {
+          console.log(like_info);
+          if(err) {
+            res.status(404).send('Problem mit der Datenbank ist aufgetreten');
+            throw err;
+          }
+          res.render('singleGame', { title: 'Express', game: singleGame, comments: commentsList, info: like_info[0][0]});
+        });
       });   
   });
 });
