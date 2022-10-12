@@ -19,10 +19,10 @@ con.connect(function (err) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  con.query("SELECT * FROM user_info LIMIT 5", function (err, userList) {
+  con.query("SELECT * FROM user_info LIMIT 15", function (err, userList) {
     if(err) throw err;
 
-    con.query("SELECT * FROM game_info LIMIT 5", function (err, gameList) {
+    con.query("SELECT * FROM game_info LIMIT 15", function (err, gameList) {
       if(err) throw err;
       res.render('index', { title: 'Express', users: userList, games: gameList});
     });
