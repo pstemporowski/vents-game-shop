@@ -15,14 +15,24 @@ block content
       th content
       th
     each val in comments
-      tr 
+      tr(style='background-color:' + val.color + ';') 
         td #{val.username}
         td #{val.title}
         td #{val.publish_date}
         td #{val.text}
         td
           button(onclick='deleteComment(' + val.comment_id+ ')') löschen
+        td(style='display:none') #{val.likes}
   script.
+    var rows = document.getElementsByClassName('row');
+    var cell
+    for( var i = 0; i < rows.length; i++) {
+      if(rows[i][5].innerHTML == 'T')
+        rows[i].style.backgroundColor = "red";
+      else
+        rows[i].style.backgroundColor = "green";
+    }
+
     function deleteGame(id) {
         fetch('/deleteGame/' + id, {
             method: 'DELETE',

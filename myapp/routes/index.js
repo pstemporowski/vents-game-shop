@@ -70,7 +70,7 @@ router.get('/users/:userId', function(req, res, next) {
       return;
     }
 
-    con.query('SELECT * FROM user_comments WHERE user_ID = ' + userId, function(err, resComments) {
+    con.query('SELECT * FROM user_comments WHERE user_ID = ' + userId, function(err, commentsList) {
 
       if(err) {
         res.status(404).send('Problem mit der Datenbank ist aufgetreten');
@@ -82,8 +82,7 @@ router.get('/users/:userId', function(req, res, next) {
           res.status(404).send('Problem mit der Datenbank ist aufgetreten');
           throw err;
         }
-      
-        commentsList = resComments;
+
         res.render('singleUser', { title: 'Express', user: singleUser, comments: commentsList, games: gamesList});
       });
     }); 
@@ -122,6 +121,14 @@ router.get('/games/:gameId', function(req, res, next) {
             res.status(404).send('Problem mit der Datenbank ist aufgetreten');
             throw err;
           }
+
+          commentsList.forEach(comment => {
+            if(comment.likes == 'T')
+              comment.color = 'green';
+            else
+              comment.color = 'red';
+          });
+        
           res.render('singleGame', { title: 'Express', game: singleGame, comments: commentsList, info: like_info[0][0]});
         });
       });   
