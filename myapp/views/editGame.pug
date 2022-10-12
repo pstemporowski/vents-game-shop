@@ -2,28 +2,29 @@ extends layout
 
 block content
     form#addProductForm
+        h3 <b> Edit Game </b>
         label#errorLabel
         br
-        label(for='title') title:
+        label(for='title') Title:
         input#title(value=game.title type='text' name='title')
         br
-        label(for='price') price:
+        label(for='price') Price:
         input#price(value=game.price type='number' name='price')
         br
-        label(for='picture') picture:
+        label(for='picture') Picture:
         input#picture(value=game.picture type='text' name='picture')
         br
-        label(for='fsk') fsk:
+        label(for='fsk') FSK:
         input#fsk(value=game.fsk type='number' name='fsk')
         br
-        label(for='description') description:
+        label(for='description') Fescription:
         input#description(value=game.description type='text' name='description')
         br
-        label(for='studio_id') studio_id:
+        label(for='studio_id') Studio_id:
         input#studio_id(value=game.studio_id type='number' name='studio_id')
         br
         input#game_id(value=game.game_id type='hidden' name='game_id' )
-        button#editGame edit Game
+        button#editGame save Changes
     script.
             
         function setErrorLabel(ErrorCode) {
@@ -55,7 +56,7 @@ block content
             if (!response.ok) {
                 setErrorLabel(text);
             }else {
-                window.location = '/'
+                window.location = '/games/' + game_id
             }
           });
         });

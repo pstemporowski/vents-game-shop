@@ -2,24 +2,25 @@ extends layout
 
 block content
     form#addProductForm
+        h3 <b> Add Game </b>
         label#errorLabel
         br
-        label(for='title') title:
+        label(for='title') Title:
         input#title(type='text' name='title')
         br
-        label(for='price') price:
+        label(for='price') Price:
         input#price(type='number' name='price')
         br
-        label(for='picture') picture:
+        label(for='picture') Picture:
         input#picture(type='text' name='picture')
         br
-        label(for='fsk') fsk:
+        label(for='fsk') FSK:
         input#fsk(type='number' name='fsk')
         br
-        label(for='description') description:
+        label(for='description') Description:
         input#description(type='text' name='description')
         br
-        label(for='studio_id') studio_id:
+        label(for='studio_id') Studio_id:
         input#studio_id(type='number' name='studio_id')
         br
         button#addGame add Game
@@ -47,7 +48,7 @@ block content
             if (!response.ok) {
                 setErrorLabel(err);
             }else {
-                window.location = '/'
+                window.location = '/games'
             }
           });
         });
