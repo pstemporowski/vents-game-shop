@@ -11,7 +11,7 @@ block content
       th content
       th
     each val in comments
-      tr
+      tr(style='background-color:' + val.color + ';') 
         td #{val.title}
         td #{val.publish_date}
         td #{val.text}

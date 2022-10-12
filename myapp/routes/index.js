@@ -83,6 +83,13 @@ router.get('/users/:userId', function(req, res, next) {
           throw err;
         }
 
+        commentsList.forEach(comment => {
+          if(comment.likes == 'T')
+            comment.color = 'green';
+          else
+            comment.color = 'red';
+        });
+        
         res.render('singleUser', { title: 'Express', user: singleUser, comments: commentsList, games: gamesList});
       });
     }); 
