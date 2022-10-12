@@ -1,29 +1,41 @@
 extends layout
 block content
-  p Name: <b>#{user.username}</b>
-  p EmailAdress: <b>#{user.email}</b>
-  button(onclick='deleteUser('+ user.user_id+ ')') deleteUser
-  p comments:
-  table
+  div.startButton
+      button#startButton(onclick="window.location.href = '/'") Mainpage
+      button#startButton(onclick="window.location.href = '/users/'") Userlist
+  div.userTitle
+      h1 <b>#{user.username}</b>
+      h2 #{user.firstname} #{user.lastname}
+  div.userInfo
+      p E-Mail: <b>#{user.email} </b>, Phonenumber: <b>#{user.phone}</b>, Birthdate: <b>#{user.birthday}</b>
+
+      button(onclick='deleteUser('+ user.user_id+ ')') Delete
+
+  
+  table.comments
     tr
-      th title
-      th creationDate
-      th content
-      th
+      th(class='column_names') Game
+      th(class='column_names') Title
+      th(class='column_names') Date
+      th(class='column_names') Comment
+      th(class='column_names')
     each val in comments
-      tr(style='background-color:' + val.color + ';') 
-        td #{val.title}
-        td #{val.publish_date}
-        td #{val.text}
-        td
+      tr(style='background-color:' + val.color + ';')   
+        td(class='column_text') #{val.game}
+        td(class='column_text') #{val.title}
+        td(class='column_text') #{val.publish_date}
+        td(class='column_text') #{val.text}
+        td(class='column_text')
           button(onclick='deleteComment(' + val.comment_id+ ')') löschen
-  p GamesOwned:
-  table
-    tr
-      th title
-    each val in games
-      tr 
-        td #{val.title}
+  div.ownedTitle
+    h3 Games Owned:
+  div.ownedTable
+    table
+      tr
+        th(class='column_names') Game
+      each val in games
+        tr 
+          td(class='column_text') #{val.title}
   script.
     function deleteUser(id) {
         fetch('/deleteUser/' + id, {

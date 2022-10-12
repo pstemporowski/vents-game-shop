@@ -1,13 +1,15 @@
 extends layout
 
 block content
-    button(onclick="window.location.href = '/'") Startseite
-    button(onclick="window.location.href = '/addGame'") Add Game
-    h3 Games
-    each val in games 
-        div(class = 'game')
-            p <b> #{val.title}</b>
-            p #{val.price}
-            br
-            button
-                a(href= '/games/' + val.game_id ) Details
+    div.startButton
+        button#startButton(onclick="window.location.href = '/'") Mainpage
+    div.gamesTitle
+        h3 Games
+        button(onclick="window.location.href = '/addGame'") Add Game
+    div.gameList
+        each val in games 
+            div(class = 'game')
+                p <b> #{val.title}</b> by studio #{val.studio}
+                p Price: #{val.price}€
+                button
+                    a(href= '/games/' + val.game_id ) Details
