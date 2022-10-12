@@ -5,13 +5,14 @@ const { compile } = require('pug');
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Database--1",
+  password: "Database--1", //Ändern
   database: "vents_gameshop"
 });
 var mysqlResult;
 
 con.connect(function (err) {
   if(err) throw err;
+
   console.log("Connected");
 });
 
@@ -85,11 +86,11 @@ router.get('/users/:userId', function(req, res, next) {
 
         commentsList.forEach(comment => {
           if(comment.likes == 'T')
-            comment.color = 'green';
+            comment.color = '#CEFFBD';
           else
-            comment.color = 'red';
+            comment.color = '#FFBDBD';
         });
-        
+
         res.render('singleUser', { title: 'Express', user: singleUser, comments: commentsList, games: gamesList});
       });
     }); 
@@ -123,7 +124,6 @@ router.get('/games/:gameId', function(req, res, next) {
           throw err;
         }
         con.query('CALL like_info(' + gameId + ')', function (err, like_info) {
-          console.log(like_info);
           if(err) {
             res.status(404).send('Problem mit der Datenbank ist aufgetreten');
             throw err;
@@ -131,11 +131,11 @@ router.get('/games/:gameId', function(req, res, next) {
 
           commentsList.forEach(comment => {
             if(comment.likes == 'T')
-              comment.color = 'green';
+              comment.color = '#CEFFBD';
             else
-              comment.color = 'red';
+              comment.color = '#FFBDBD';
           });
-        
+
           res.render('singleGame', { title: 'Express', game: singleGame, comments: commentsList, info: like_info[0][0]});
         });
       });   
@@ -143,7 +143,7 @@ router.get('/games/:gameId', function(req, res, next) {
 });
 
 router.post('/addGame', function(req, res, next) {
-  console.log(req.body.fsk);
+
   con.query('INSERT INTO games (title, price, picture, studio_id, FSK, description)' +
    ' VALUES ("' + req.body.title + '",' + req.body.price + ',"'
     +req.body.picture+ '",' + req.body.studio_id +
@@ -178,7 +178,7 @@ router.get('/editGame/:gameID', function(req, res, next) {
 });
 
 router.put('/editGame/:gameID', function(req, res, next) {
-  console.log('#im in');
+
   var game = req.params.gameID;
   con.query('UPDATE games ' + 
   'SET title ="' +req.body.title + '",'+
@@ -238,9 +238,5 @@ router.delete('/deleteComment/:commentID', function(req, res, next) {
 });
 
 
-router.get('/db/all', function(req, res, next) {
-  
-  res.send(mysqlResult)
-});
 
 module.exports = router;
