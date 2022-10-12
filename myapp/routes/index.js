@@ -116,7 +116,7 @@ router.get('/games/:gameId', function(req, res, next) {
           res.status(404).send('Problem mit der Datenbank ist aufgetreten');
           throw err;
         }
-
+        console.log(commentsList.comment_id);
         res.render('singleGame', { title: 'Express', game: singleGame, comments: commentsList});
       });   
   });

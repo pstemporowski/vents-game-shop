@@ -46,7 +46,7 @@ block content
       
         }).then(function (response) {
             response.text().then(function (text) {
-            window.location = '/games/' + id;
+            location.reload();
             });
         })
     }
