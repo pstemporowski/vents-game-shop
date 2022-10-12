@@ -1,12 +1,163 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  
+}
+
+.title{
+  padding: 10px;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+.startButton{
+  float:left;
+  font-size: 24px;
+  padding-top: 1%;
+  padding-left: 1%;
+}
+
+#startButton{
+  font-size: 18px;
+}
+
+.usersTitle{
+  width: 30%;
+  float: left;
+  text-align: center;
+  padding-top: 2%;
+}
+
+.userList{
+  column-count: 2;
+  column-rule: dashed;
+  column-gap: 5em;
+  float: left;
+  margin-top: 5%;
+  padding: 1%;
+  border: 1px solid black;
+}
+
+.user{
+  padding-bottom: 10px;
+  break-inside: avoid-column;
+}
+
+.gamesTitle{
+  width: 30%;
+  float: left;
+  text-align: center;
+  padding-top: 2%;
+}
+
+.gameList{
+  column-count: 2;
+  column-rule: dashed;
+  column-gap: 5em;
+  float: left;
+  margin-top: 5%;
+  padding: 1%;
+  border: 1px solid black;
+}
+
+.game{
+  padding-bottom: 10px;
+  break-inside: avoid-column;
+}
+
+.gameTitle{
+  text-align: center;
+  float: left;
+  width:100%;
+}
+
+.gameInfo{
+  text-align: center;
+  float: left;
+  width:100%;
+  margin-bottom: 20px;
+}
+
+.userTitle{
+  text-align: center;
+  float: left;
+  width:100%;
+}
+
+.userInfo{
+  text-align: center;
+  float: left;
+  width:100%;
+  margin-bottom: 20px;
+}
+
+.comments{
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+.ownedTitle{
+  width: 20%;
+  float: left;
+  text-align: center;
+  padding-top: 2%;
+}
+
+.ownedTable{
+  padding-top: 40px;
+}
+
+.column_text{
+  padding: 3px;
+}
+
+#left{
+  padding-left: 10%;
+  float: left;
+  width: 40%;
+  text-align: center;
+}
+
+#right{
+  padding-right: 10%;
+  float: left;
+  width: 40%;
+  text-align: center;
+}
+
+.table{
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+.column_names{
+  font-size: 16px;
+  padding: 5px;
+  background-color: lightgrey;
 }
 
 a {
-  color: #00B7FF;
+  color: black;
+  text-decoration: none;
+}
+
+h3{
+  font-size: 20px;
+  text-decoration: underline;
 }
 
 table, th, td {
   border: 1px solid black;
+}
+
+button{
+  margin: 2px;
+  padding: 5px;
+  background-color:#EEEEEE;
+  border: 1px solid black;
+  border-radius: 8px;
 }
